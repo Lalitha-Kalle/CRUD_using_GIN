@@ -109,5 +109,15 @@ curl -X PUT http://localhost:2000/books/1 \
   -d '{"id": "1", "title": "Deep Work", "author": "Cal Newport"}'
 ```
 
+### DELETE /books/:id
+
+Deletes an existing book by ID.
+
+Example:
+
+```bash
+curl -X DELETE http://localhost:2000/books/1
+```
+
 
 ---

@@ -22,6 +22,7 @@ func main() {
 	router := gin.Default()
 
 	router.GET("/books", getBooks)
+	router.GET("/books/:id", getBook)
 
 	fmt.Println("Server running at 2000")
 	router.Run(":2000")
@@ -29,4 +30,15 @@ func main() {
 
 func getBooks(c *gin.Context) {
 	c.JSON(http.StatusOK, books)
+}
+
+func getBook(c  *gin.Context) {
+	id := c.Param("id")
+	for _,b := range books {
+		if b.ID == id {
+			c.JSON(http.StatusOK, b)
+			return
+		}
+	}
+	c.JSON(http.StatusNotFound, gin.H{"message": "book not found"})
 }

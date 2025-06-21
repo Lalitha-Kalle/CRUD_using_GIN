@@ -23,6 +23,7 @@ func main() {
 
 	router.GET("/books", getBooks)
 	router.GET("/books/:id", getBook)
+	router.POST("/books", createBook)
 
 	fmt.Println("Server running at 2000")
 	router.Run(":2000")
@@ -41,4 +42,14 @@ func getBook(c  *gin.Context) {
 		}
 	}
 	c.JSON(http.StatusNotFound, gin.H{"message": "book not found"})
+}
+
+func createBook(c *gin.Context) {
+	var newBook Book 
+	if err:= c.BindJSON(&newBook); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	books = append(books, newBook)
+	c.JSON(http.StatusCreated, newBook)
 }

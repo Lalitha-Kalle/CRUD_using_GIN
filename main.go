@@ -8,9 +8,9 @@ import (
 )
 
 type Book struct {
-	ID string `json:id`
-	Title string `json:title`
-	Author string `json:Author`
+	ID string `json:"id"`
+	Title string `json:"title"`
+	Author string `json:"author"`
 }
 
 var books = []Book{
@@ -24,6 +24,8 @@ func main() {
 	router.GET("/books", getBooks)
 	router.GET("/books/:id", getBook)
 	router.POST("/books", createBook)
+	router.PUT("/books/:id", updateBook)
+	// router.DELETE("/books:id", deleteBook)
 
 	fmt.Println("Server running at 2000")
 	router.Run(":2000")
@@ -53,3 +55,22 @@ func createBook(c *gin.Context) {
 	books = append(books, newBook)
 	c.JSON(http.StatusCreated, newBook)
 }
+
+func updateBook(c *gin.Context) {
+	id := c.Param("id")
+
+	var updatedBook Book 
+	if err := c.BindJSON(&updatedBook); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return 
+	}
+	for i, b := range books {
+		if b.ID == id {
+			books[i] = updatedBook
+			c.JSON(http.StatusOK, updatedBook)
+			return
+		}
+	}
+	c.JSON(http.StatusNotFound, gin.H{"message": "book not found"})
+}
+

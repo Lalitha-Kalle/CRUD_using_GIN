@@ -25,7 +25,7 @@ func main() {
 	router.GET("/books/:id", getBook)
 	router.POST("/books", createBook)
 	router.PUT("/books/:id", updateBook)
-	// router.DELETE("/books:id", deleteBook)
+	router.DELETE("/books/:id", deleteBook)
 
 	fmt.Println("Server running at 2000")
 	router.Run(":2000")
@@ -74,3 +74,15 @@ func updateBook(c *gin.Context) {
 	c.JSON(http.StatusNotFound, gin.H{"message": "book not found"})
 }
 
+func deleteBook(c *gin.Context) {
+	id := c.Param("id")
+
+	for i, b := range books {
+		if b.ID == id {
+			books = append(books[:i], books[i+1:]...)
+			c.JSON(http.StatusOK, gin.H{"message": "Book deleted"})
+			return
+		}
+	}
+	c.JSON(http.StatusNotFound, gin.H{"message": "book not found"})
+}

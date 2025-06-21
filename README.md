@@ -10,7 +10,7 @@ A simple in-memory CRUD (Create, Read, Update, Delete) API built using the Gin w
 - ✅ Get a book by ID
 - ✅ Create a new book
 - ✅ Update a book by ID
-- ❌ Delete a book (you can add this easily)
+- ✅ Delete a book by ID
 
 ---
 
@@ -109,18 +109,5 @@ curl -X PUT http://localhost:2000/books/1 \
   -d '{"id": "1", "title": "Deep Work", "author": "Cal Newport"}'
 ```
 
----
-
-## ✅ TODO (Suggestions to improve this project)
-
-- [ ] Add DELETE /books/:id endpoint
-- [ ] Use UUIDs instead of string IDs
-- [ ] Use in-memory map instead of slice for better performance
-- [ ] Add input validation
-- [ ] Add persistent storage (SQLite, PostgreSQL, etc.)
 
 ---
-
-## 📃 License
-
-This project is open-source and free to use for learning purposes.
